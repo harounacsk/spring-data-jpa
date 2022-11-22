@@ -1,0 +1,59 @@
+CREATE SEQUENCE  IF NOT EXISTS hibernate_sequence START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE depot (
+  id BIGINT NOT NULL,
+   notice VARCHAR(255),
+   CONSTRAINT pk_depot PRIMARY KEY (id)
+);
+
+CREATE SEQUENCE  IF NOT EXISTS hibernate_sequence START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE article (
+  id BIGINT NOT NULL,
+   name VARCHAR(255),
+   price FLOAT NOT NULL,
+   depot_id BIGINT,
+   backup BOOLEAN NOT NULL,
+   ean VARCHAR(255),
+   notice VARCHAR(255),
+   CONSTRAINT pk_article PRIMARY KEY (id)
+);
+CREATE SEQUENCE  IF NOT EXISTS hibernate_sequence START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE distributor (
+  id BIGINT NOT NULL,
+   name VARCHAR(255),
+   street VARCHAR(255),
+   house VARCHAR(255),
+   code VARCHAR(255),
+   city VARCHAR(255),
+   CONSTRAINT pk_distributor PRIMARY KEY (id)
+);
+CREATE SEQUENCE  IF NOT EXISTS hibernate_sequence START WITH 1 INCREMENT BY 1;
+
+CREATE SEQUENCE  IF NOT EXISTS hibernate_sequence START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE article_distributor (
+  id BIGINT NOT NULL,
+   article_id BIGINT,
+   distributor_id BIGINT,
+   price FLOAT NOT NULL,
+   tax FLOAT NOT NULL,
+   CONSTRAINT pk_articledistributor PRIMARY KEY (id)
+);
+
+CREATE SEQUENCE  IF NOT EXISTS hibernate_sequence START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE entrance (
+  id BIGINT NOT NULL,
+   article_id BIGINT,
+   quantity INTEGER NOT NULL,
+   notice VARCHAR(255),
+   CONSTRAINT pk_entrance PRIMARY KEY (id)
+);
+ALTER TABLE article ADD CONSTRAINT FK_ARTICLE_ON_DEPOT FOREIGN KEY (depot_id) REFERENCES depot (id);
+ALTER TABLE entrance ADD CONSTRAINT FK_ENTRANCE_ON_ARTICLE FOREIGN KEY (article_id) REFERENCES article (id);
+
+ALTER TABLE article_distributor ADD CONSTRAINT FK_ARTICLEDISTRIBUTOR_ON_ARTICLE FOREIGN KEY (article_id) REFERENCES article (id);
+
+ALTER TABLE article_distributor ADD CONSTRAINT FK_ARTICLEDISTRIBUTOR_ON_DISTRIBUTOR FOREIGN KEY (distributor_id) REFERENCES distributor (id);
