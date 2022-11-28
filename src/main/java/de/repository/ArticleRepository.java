@@ -26,7 +26,7 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
   List<ArticleInfoDTO> findByNamingJPQL(String name);
 
   @Query(value = "SELECT new de.payload.response.ArticleInfoDTO(e.article.id, e.article.name, e.article.price, e.article.backup,e.article.depot.notice, Sum(e.quantity) As quantity)" +
-    " FROM Entrance e INNER JOIN  e.article as art INNER JOIN  art.depot d GROUP BY art.id, e.article.depot.notice, e.article.id ")
+    " FROM Entrance e GROUP BY  e.article.depot.notice, e.article.id,e.article.name , e.article.price, e.article.backup")
   List<ArticleInfoDTO> findArticlesInfo();
 
 }
