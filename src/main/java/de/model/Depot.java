@@ -11,8 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Depot {
   @Id
